@@ -514,3 +514,5 @@ button { font-family: var(--font-sans); }
 .rank-bars .rank-bar-row { color: var(--foreground); }
 .rank-bars .own-machine { background: var(--secondary); }
 @media(max-width:570px) { .results-line { align-items: flex-start; gap: 8px; flex-wrap: wrap; }.results-line>span { max-width: 100%; }.summary-item small { font-size: 9px; }.summary-item strong { font-size: 24px; } }
+.route-map { overflow: hidden; }
+.route-map svg { flex: 1 1 0; }
