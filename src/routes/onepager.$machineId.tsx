@@ -1,0 +1,4 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { OnePager } from '@/features/operator/onepager';
+export const Route = createFileRoute('/onepager/$machineId')({ head: ({ params }) => ({ meta: [{ title: `${params.machineId} · Operação — OPERATOR INTELLIGENCE` }, { name: 'description', content: `Volume, combustível, pontuação e percurso da máquina ${params.machineId}.` }, { property: 'og:title', content: `${params.machineId} — OPERATOR INTELLIGENCE` }, { property: 'og:description', content: 'Acompanhamento da operação da máquina, etapa por etapa.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: MachineRoute });
+function MachineRoute() { const { machineId } = Route.useParams(); return <OnePager machineId={machineId}/>; }
