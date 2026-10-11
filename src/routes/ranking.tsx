@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { RankingPage } from '@/features/operator/criteria';
+export const Route = createFileRoute('/ranking')({ head: () => ({ meta: [{ title: 'Ranking por pontuação — OPERATOR INTELLIGENCE' }, { name: 'description', content: 'Compare o desempenho de máquinas da mesma família, com critérios ponderados e etapas válidas.' }, { property: 'og:title', content: 'Ranking — OPERATOR INTELLIGENCE' }, { property: 'og:description', content: 'Desempenho florestal com uma comparação justa por pontuação.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: RankingPage });

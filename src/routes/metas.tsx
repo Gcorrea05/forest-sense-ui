@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { CriteriaPage } from '@/features/operator/criteria';
+export const Route = createFileRoute('/metas')({ head: () => ({ meta: [{ title: 'Metas e métricas — OPERATOR INTELLIGENCE' }, { name: 'description', content: 'Selecione as métricas e distribua os pesos do desempenho da sua frota florestal.' }, { property: 'og:title', content: 'Metas e métricas — OPERATOR INTELLIGENCE' }, { property: 'og:description', content: 'Critérios claros, pesos editáveis e prévia do impacto no ranking.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: CriteriaPage });
