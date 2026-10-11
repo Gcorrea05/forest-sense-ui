@@ -1,24 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { FleetPage } from '@/features/operator/fleet';
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({ meta: [
+    { title: 'Todas as máquinas — OPERATOR INTELLIGENCE' },
+    { name: 'description', content: 'Acompanhe a frota florestal, identifique desvios e consulte o desempenho de cada máquina.' },
+    { property: 'og:title', content: 'Todas as máquinas — OPERATOR INTELLIGENCE' },
+    { property: 'og:description', content: 'Clareza para o gestor. Inteligência para cada etapa da operação.' },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+  ] }),
+  component: FleetPage,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
 }

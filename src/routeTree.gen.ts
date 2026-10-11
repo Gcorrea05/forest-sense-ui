@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MetasRouteImport } from './routes/metas'
+import { Route as RankingRouteImport } from './routes/ranking'
+import { Route as OnepagerMachineIdRouteImport } from './routes/onepager.$machineId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MetasRoute = MetasRouteImport.update({
+  id: '/metas',
+  path: '/metas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankingRoute = RankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnepagerMachineIdRoute = OnepagerMachineIdRouteImport.update({
+  id: '/onepager/$machineId',
+  path: '/onepager/$machineId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/metas': typeof MetasRoute
+  '/ranking': typeof RankingRoute
+  '/onepager/$machineId': typeof OnepagerMachineIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/metas': typeof MetasRoute
+  '/ranking': typeof RankingRoute
+  '/onepager/$machineId': typeof OnepagerMachineIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/metas': typeof MetasRoute
+  '/ranking': typeof RankingRoute
+  '/onepager/$machineId': typeof OnepagerMachineIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/metas' | '/ranking' | '/onepager/$machineId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/metas' | '/ranking' | '/onepager/$machineId'
+  id: '__root__' | '/' | '/metas' | '/ranking' | '/onepager/$machineId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MetasRoute: typeof MetasRoute
+  RankingRoute: typeof RankingRoute
+  OnepagerMachineIdRoute: typeof OnepagerMachineIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/metas': {
+      id: '/metas'
+      path: '/metas'
+      fullPath: '/metas'
+      preLoaderRoute: typeof MetasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ranking': {
+      id: '/ranking'
+      path: '/ranking'
+      fullPath: '/ranking'
+      preLoaderRoute: typeof RankingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onepager/$machineId': {
+      id: '/onepager/$machineId'
+      path: '/onepager/$machineId'
+      fullPath: '/onepager/$machineId'
+      preLoaderRoute: typeof OnepagerMachineIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MetasRoute: MetasRoute,
+  RankingRoute: RankingRoute,
+  OnepagerMachineIdRoute: OnepagerMachineIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
