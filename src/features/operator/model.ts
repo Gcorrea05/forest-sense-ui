@@ -69,10 +69,12 @@ export function advanceOperation(machine: Machine, operation: Operation, stage: 
   for (let s = operation.stage + 1; s <= stage; s++) { next.observations.push(observation(machine, s)); const event = eventFor(machine, s, operation.run); if (event) next.events.push(event); }
   return next;
 }
-export function acknowledge(operation: Operation, id: string): Operation { return { ...operation, events: operation.events.map(e => e.id === id ? { ...e, acknowledged: true } : e) }; }
-export function activeAlert(operation: Operation): Event | undefined { return [...operation.events].reverse().find(e => (e.kind === 'critical' || e.kind === 'attention') && e.stage >= operation.stage - 1 && operation.stage < 3); }
+export function acknowledge(operation: Operation | undefined, id: string): Operation { if (!operation) throw new Error('Operação indisponível'); return { ...operation, events: operation.events.map(e => e.id === id ? { ...e, acknowledged: true } : e) }; }
+export function activeAlert(operation: Operation | undefined): Event | undefined { if (!operation) return undefined; return [...operation.events].reverse().find(e => (e.kind === 'critical' || e.kind === 'attention') && e.stage >= operation.stage - 1 && operation.stage < 3); }
 export function visibleMachines(state: DemoState): Machine[] {
   const q = state.query;
   return machines.filter(m => { const o = state.operations[m.id]; return m.id.toLowerCase().includes(q.search.toLowerCase()) && (q.family === 'all' || m.family === q.family) && (q.source === 'all' || m.source === q.source) && (q.status === 'all' || o?.status === q.status) && (!q.attention || !!(o && activeAlert(o))); }).sort((a,b) => q.sort === 'name' ? a.id.localeCompare(b.id) : Number(!!activeAlert(state.operations[b.id])) - Number(!!activeAlert(state.operations[a.id])) || a.index-b.index);
 }
 export const statusLabel = { ready: 'Pronta para iniciar', running: 'Em operação', finished: 'Encerrada' };
+
+export function getOperation(state: DemoState, id: string): Operation { const existing = state.operations[id]; if (existing) return existing; const machine = machines.find(m => m.id === id); if (!machine) throw new Error('Máquina indisponível'); return createOperation(machine); }

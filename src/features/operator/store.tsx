@@ -15,7 +15,7 @@ export function OperatorProvider({ children }: { children: ReactNode }) {
     const unsubscribe = localAdapter.subscribe(data => { if (data.revision >= ref.current.revision) { ref.current = data; setState(data); } });
     return () => { alive = false; unsubscribe(); };
   }, []);
-  useEffect(() => { document.documentElement.classList.toggle('dark', state.theme === 'dark'); document.documentElement.dataset.accent = state.accent; }, [state.theme, state.accent]);
+  useEffect(() => { document.documentElement.classList.toggle('dark', state.theme === 'dark'); document.documentElement.dataset['accent'] = state.accent; }, [state.theme, state.accent]);
   useEffect(() => {
     if (!hydrated) return;
     const timer = window.setInterval(() => { const current = ref.current; let changed = false; const operations = { ...current.operations }; for (const machine of machines) { const op = operations[machine.id]; if (!op || op.status !== 'running' || op.startedAt == null) continue; const stage = Math.min(5, Math.floor((Date.now() - op.startedAt) / 10000)); if (stage > op.stage) { operations[machine.id] = advanceOperation(machine, op, stage); changed = true; } } if (changed) update(s => ({ ...s, operations })); }, 500);
